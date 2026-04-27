@@ -1,24 +1,56 @@
 package com.servlet;
 
 import java.io.IOException;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-import com.dao.FeePaymentDAO;
+import com.dao.DBConnection;
 import com.model.FeePayment;
 
-@WebServlet("/reportOverdue")
+@WebServlet("/ReportServlet")
 public class ReportServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        FeePaymentDAO dao = new FeePaymentDAO();
-        List<FeePayment> list = dao.getOverduePayments();
+        String type = request.getParameter("type");
 
-        request.setAttribute("list", list);
-        request.getRequestDispatcher("report.jsp").forward(request, response);
+        if(type != null && type.equals("overdue")) {
+
+            List<FeePayment> list = new ArrayList<>();
+
+            try {
+                Connection con = DBConnection.getConnection();
+
+                String sql = "SELECT * FROM FeePayments WHERE Status='Overdue'";
+                PreparedStatement ps = con.prepareStatement(sql);
+
+                ResultSet rs = ps.executeQuery();
+
+                while(rs.next()) {
+                    FeePayment fp = new FeePayment();
+
+                    fp.setPaymentID(rs.getInt("PaymentID"));
+                    fp.setStudentName(rs.getString("StudentName"));
+                    fp.setAmount(rs.getDouble("Amount"));
+                    fp.setStatus(rs.getString("Status"));
+
+                    list.add(fp);
+                }
+
+                con.close();
+
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+
+            request.setAttribute("list", list);
+            request.setAttribute("type", "overdue");
+
+            request.getRequestDispatcher("report_result.jsp").forward(request, response);
+        }
     }
 }

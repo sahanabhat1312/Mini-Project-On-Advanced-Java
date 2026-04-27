@@ -11,7 +11,7 @@
 
 <form action="addPayment" method="post">
 
-<input type="number" name="studentID" placeholder="Student ID" required>
+<input type="number" name="studentId" min="1" step="1" placeholder="Student ID" required>
 
 <input type="text" name="studentName" placeholder="Student Name" required>
 

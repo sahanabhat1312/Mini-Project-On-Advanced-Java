@@ -153,4 +153,31 @@ public class FeePaymentDAO {
 
         return list;
     }
+    public double getTotalByDateRange(String from, String to) {
+
+        double total = 0;
+
+        try {
+            Connection con = DBConnection.getConnection();
+
+            String sql = "SELECT SUM(Amount) AS total FROM FeePayments WHERE PaymentDate BETWEEN ? AND ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setString(1, from);
+            ps.setString(2, to);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                total = rs.getDouble("total");
+            }
+
+            con.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return total;
+    }
 }
