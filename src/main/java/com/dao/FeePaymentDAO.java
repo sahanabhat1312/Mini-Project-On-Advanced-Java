@@ -160,11 +160,13 @@ public class FeePaymentDAO {
         try {
             Connection con = DBConnection.getConnection();
 
-            String sql = "SELECT SUM(Amount) AS total FROM FeePayments WHERE PaymentDate BETWEEN ? AND ?";
+            String sql = "SELECT SUM(Amount) AS total FROM FeePayments " +
+                         "WHERE DATE(PaymentDate) BETWEEN ? AND ?";
+
             PreparedStatement ps = con.prepareStatement(sql);
 
-            ps.setString(1, from);
-            ps.setString(2, to);
+            ps.setDate(1, java.sql.Date.valueOf(from));
+            ps.setDate(2, java.sql.Date.valueOf(to));
 
             ResultSet rs = ps.executeQuery();
 
@@ -179,5 +181,29 @@ public class FeePaymentDAO {
         }
 
         return total;
+    }
+    public String getStudentNameById(int studentID) {
+        String name = "";
+
+        try {
+            Connection con = DBConnection.getConnection();
+
+            String sql = "SELECT StudentName FROM FeePayments WHERE StudentID=? LIMIT 1";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, studentID);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                name = rs.getString("StudentName");
+            }
+
+            con.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return name;
     }
 }

@@ -1,9 +1,13 @@
+/* BODY */
 body {
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     background: linear-gradient(to right, #4facfe, #00f2fe);
     margin: 0;
 }
 
+/* =========================
+   SMALL (FOR FORMS)
+========================= */
 .container {
     display: flex;
     justify-content: center;
@@ -20,16 +24,63 @@ body {
     text-align: center;
 }
 
+/* =========================
+   MEDIUM (FOR REPORTS)
+========================= */
+.medium-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+}
+
+.medium-card {
+    width: 700px;  /* 🔥 balanced size */
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+/* =========================
+   FULL WIDTH (FOR TABLE)
+========================= */
+.full-container {
+    width: 95%;
+    margin: 40px auto;
+    overflow-x: auto;
+}
+
+.full-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+/* =========================
+   HEADINGS
+========================= */
 h2 {
     color: green;
+    margin-bottom: 20px;
 }
 
+/* =========================
+   INPUT FIELDS
+========================= */
 input, select {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin: 10px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
 }
 
+/* =========================
+   BUTTONS
+========================= */
 button, .btn {
     display: inline-block;
     padding: 10px 20px;
@@ -38,28 +89,51 @@ button, .btn {
     text-decoration: none;
     border-radius: 5px;
     border: none;
-    margin-top: 10px;
+    margin: 5px;
+    cursor: pointer;
 }
 
 button:hover, .btn:hover {
     background: #45a049;
 }
 
+/* =========================
+   TABLE
+========================= */
 table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
 }
 
 th {
     background: #4CAF50;
     color: white;
-    padding: 10px;
+    padding: 12px;
+    text-align: center;
 }
 
 td {
-    padding: 10px;
+    padding: 12px;
+    text-align: center;
 }
 
 tr:nth-child(even) {
     background: #f2f2f2;
+}
+
+/* =========================
+   RESULT ICON
+========================= */
+.icon {
+    font-size: 80px;
+    margin: 15px 0;
+}
+
+.success {
+    color: green;
+}
+
+.fail {
+    color: red;
 }

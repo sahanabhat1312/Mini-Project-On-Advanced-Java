@@ -15,32 +15,57 @@ public class UpdateFeePaymentServlet extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            int paymentID = Integer.parseInt(request.getParameter("paymentID"));
-            int studentID = Integer.parseInt(request.getParameter("studentID"));
-            String studentName = request.getParameter("studentName");
-            String paymentDate = request.getParameter("paymentDate");
-            double amount = Double.parseDouble(request.getParameter("amount"));
+
+            String pid = request.getParameter("paymentID");
+            String sid = request.getParameter("studentID");
+            String name = request.getParameter("studentName");
+            String date = request.getParameter("paymentDate");
+            String amt = request.getParameter("amount");
             String status = request.getParameter("status");
+
+            if (pid == null || sid == null || name == null || date == null || amt == null) {
+                throw new Exception("Missing form values");
+            }
+
+            int paymentID = Integer.parseInt(pid);
+            int studentID = Integer.parseInt(sid);
+
+            // ✅ VALIDATION
+            if (studentID <= 0) {
+                request.setAttribute("msg", "Invalid Student ID! Only positive numbers allowed.");
+                request.setAttribute("type", "fail");
+                request.getRequestDispatcher("result.jsp").forward(request, response);
+                return;
+            }
+
+            double amount = Double.parseDouble(amt);
 
             FeePayment fp = new FeePayment();
             fp.setPaymentID(paymentID);
             fp.setStudentID(studentID);
-            fp.setStudentName(studentName);
-            fp.setPaymentDate(paymentDate);
+            fp.setStudentName(name);
+            fp.setPaymentDate(date);
             fp.setAmount(amount);
             fp.setStatus(status);
 
             FeePaymentDAO dao = new FeePaymentDAO();
+
             boolean result = dao.updatePayment(fp);
-            response.setContentType("text/html");
+
             if (result) {
-                response.getWriter().println("<h2 style='color:green;'>Updated Successfully</h2>");
+                request.setAttribute("msg", "Updated Successfully");
+                request.setAttribute("type", "success");
             } else {
-                response.getWriter().println("<h2 style='color:red;'>Update Failed</h2>");
+                request.setAttribute("msg", "Update Failed");
+                request.setAttribute("type", "fail");
             }
 
+            request.getRequestDispatcher("result.jsp").forward(request, response);
+
         } catch (Exception e) {
-            response.getWriter().println("Error: " + e);
+            request.setAttribute("msg", "Error: " + e.getMessage());
+            request.setAttribute("type", "fail");
+            request.getRequestDispatcher("result.jsp").forward(request, response);
         }
     }
 }

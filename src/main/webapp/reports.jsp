@@ -1,12 +1,12 @@
-<html>
+ <html>
 <head>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="container">
-<div class="card">
+<div class="medium-container">
+<div class="medium-card">
 
 <h2>Reports</h2>
 

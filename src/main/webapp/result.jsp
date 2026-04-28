@@ -23,20 +23,21 @@
 <%
 String msg = (String) request.getAttribute("msg");
 String type = (String) request.getAttribute("type");
-
-if(type == null) type = "success";
 %>
 
-<div class="icon <%= type %>">
-    <%= type.equals("success") ? "✔️" : "❌" %>
-</div>
-
-<h2><%= msg %></h2>
-
-<br>
 
 <a href="index.jsp" class="btn">🏠 Home</a>
 <a href="displayPayments" class="btn">📋 View Records</a>
+<h2 style="color:<%= "success".equals(type) ? "green" : "red" %>;">
+    <%= msg %>
+</h2>
+
+<div class="icon <%= type %>">
+    <%= "success".equals(type) ? "✔️" : "❌" %>
+</div>
+
+<br>
+
 
 </div>
 </div>

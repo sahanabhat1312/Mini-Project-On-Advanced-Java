@@ -13,15 +13,25 @@
 
 <input type="number" name="paymentID" placeholder="Payment ID" required>
 
-<input type="text" name="studentName" placeholder="New Name" required>
+<input type="number" name="studentID" placeholder="Student ID" min="1" required 
+       oninvalid="this.setCustomValidity('Enter positive Student ID')"
+       oninput="this.setCustomValidity('')">
 
-<input type="number" name="amount" placeholder="New Amount" required>
+<input type="text" name="studentName" placeholder="Student Name" required>
 
-<button type="submit">Update</button>
+<input type="date" name="paymentDate" required>
 
-</form>
+<input type="number" name="amount" placeholder="Amount" required>
 
+<select name="status">
+    <option value="Paid">Paid</option>
+    <option value="Overdue">Overdue</option>
+    <option value="Pending">Pending</option>
+</select>
+
+<button type="submit">Update</button><br>
 <a href="index.jsp" class="btn">Back</a>
+</form>
 
 </div>
 </div>

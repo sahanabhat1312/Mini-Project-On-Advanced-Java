@@ -1,4 +1,4 @@
-package com.servlet;
+ package com.servlet;
 
 import java.io.IOException;
 import java.sql.*;
@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import com.dao.DBConnection;
+import com.dao.FeePaymentDAO;
 import com.model.FeePayment;
 
 @WebServlet("/ReportServlet")
@@ -20,37 +21,19 @@ public class ReportServlet extends HttpServlet {
 
         if(type != null && type.equals("overdue")) {
 
-            List<FeePayment> list = new ArrayList<>();
-
             try {
-                Connection con = DBConnection.getConnection();
 
-                String sql = "SELECT * FROM FeePayments WHERE Status='Overdue'";
-                PreparedStatement ps = con.prepareStatement(sql);
+                FeePaymentDAO dao = new FeePaymentDAO();
+                List<FeePayment> list = dao.getOverduePayments();
 
-                ResultSet rs = ps.executeQuery();
+                request.setAttribute("list", list);
+                request.setAttribute("type", "overdue");
 
-                while(rs.next()) {
-                    FeePayment fp = new FeePayment();
-
-                    fp.setPaymentID(rs.getInt("PaymentID"));
-                    fp.setStudentName(rs.getString("StudentName"));
-                    fp.setAmount(rs.getDouble("Amount"));
-                    fp.setStatus(rs.getString("Status"));
-
-                    list.add(fp);
-                }
-
-                con.close();
+                request.getRequestDispatcher("report_result.jsp").forward(request, response);
 
             } catch(Exception e) {
                 e.printStackTrace();
             }
-
-            request.setAttribute("list", list);
-            request.setAttribute("type", "overdue");
-
-            request.getRequestDispatcher("report_result.jsp").forward(request, response);
         }
     }
 }

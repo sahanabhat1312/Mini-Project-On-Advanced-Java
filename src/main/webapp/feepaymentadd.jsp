@@ -11,9 +11,12 @@
 
 <form action="addPayment" method="post">
 
-<input type="number" name="studentId" min="1" step="1" placeholder="Student ID" required>
+<input type="number" id="studentID" name="studentID"
+       placeholder="Student ID"
+       onkeyup="fetchName()" required>
 
-<input type="text" name="studentName" placeholder="Student Name" required>
+<input type="text" id="studentName" name="studentName"
+       placeholder="Student Name" required>
 
 <input type="date" name="paymentDate" required>
 
@@ -21,12 +24,29 @@
 
 <select name="status">
     <option value="Paid">Paid</option>
+    <option value="Pending">Pending</option>
     <option value="Overdue">Overdue</option>
 </select>
+
 
 <button type="submit">Add Payment</button>
 
 </form>
+<script>
+function fetchName(){
+    var id = document.getElementById("studentID").value;
+
+    if(id === "") return;
+
+    fetch("addPayment?studentID=" + id)
+    .then(response => response.text())
+    .then(data => {
+        if(data !== ""){
+            document.getElementById("studentName").value = data;
+        }
+    });
+}
+</script>
 
 <a href="index.jsp" class="btn">Back</a>
 
