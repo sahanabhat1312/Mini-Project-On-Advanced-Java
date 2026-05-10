@@ -3,7 +3,7 @@ package com.servlet;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
@@ -17,9 +17,12 @@ public class DisplayFeePaymentsServlet extends HttpServlet {
             throws ServletException, IOException {
 
         FeePaymentDAO dao = new FeePaymentDAO();
+
         List<FeePayment> list = dao.getAllPayments();
-        System.out.println("List size = " + list.size());
+
         request.setAttribute("list", list);
-        request.getRequestDispatcher("feepaymentdisplay.jsp").forward(request, response);
+
+        request.getRequestDispatcher("feepaymentdisplay.jsp")
+               .forward(request, response);
     }
 }

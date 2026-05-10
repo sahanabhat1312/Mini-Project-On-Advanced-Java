@@ -1,21 +1,49 @@
-<%@ page import="java.util.*,com.model.FeePayment" %>
+<%@ page contentType="text/html;charset=UTF-8"
+         pageEncoding="UTF-8"
+         import="java.util.*,com.model.FeePayment" %>
+
 <html>
 <head>
+
 <link rel="stylesheet" href="style.css">
+
+<meta charset="UTF-8">
+
 </head>
 
 <body>
+
 <div class="medium-container">
 <div class="medium-card">
-<%
-String type = (String) request.getAttribute("type");
 
-if("overdue".equals(type)){
+<%
+if(request.getAttribute("total") != null){
+%>
+
+<h2>Total Collection</h2>
+
+<p>
+From :
+<%= request.getAttribute("from") %>
+</p>
+
+<p>
+To :
+<%= request.getAttribute("to") %>
+</p>
+
+<h3>
+₹ <%= request.getAttribute("total") %>
+</h3>
+
+<%
+} else {
 %>
 
 <h2>Overdue Payments</h2>
 
 <table border="1">
+
 <tr>
 <th>ID</th>
 <th>Student ID</th>
@@ -26,28 +54,42 @@ if("overdue".equals(type)){
 </tr>
 
 <%
-List<FeePayment> list = (List<FeePayment>) request.getAttribute("list");
+List<FeePayment> list =
+(List<FeePayment>) request.getAttribute("list");
 
 if(list != null && !list.isEmpty()){
-    for(FeePayment fp : list){
+
+for(FeePayment fp : list){
 %>
 
 <tr>
+
 <td><%= fp.getPaymentID() %></td>
+
 <td><%= fp.getStudentID() %></td>
+
 <td><%= fp.getStudentName() %></td>
+
 <td><%= fp.getPaymentDate() %></td>
-<td><%= fp.getAmount() %></td>
+
+<td>₹ <%= fp.getAmount() %></td>
+
 <td><%= fp.getStatus() %></td>
+
 </tr>
 
 <%
-    }
-} else {
+}
+}
+else{
 %>
 
 <tr>
-<td colspan="6">No Overdue Records</td>
+
+<td colspan="6">
+No Records Found
+</td>
+
 </tr>
 
 <%
@@ -57,22 +99,14 @@ if(list != null && !list.isEmpty()){
 </table>
 
 <%
-} else {
-%>
-
-<h2>Total Collection</h2>
-
-<p>From: <%= request.getAttribute("from") %></p>
-<p>To: <%= request.getAttribute("to") %></p>
-
-<h3> &#8377;<%= request.getAttribute("total") %></h3>
-
-<%
 }
 %>
 
 <br>
-<a href="index.jsp" class="btn">Back</a>
+
+<a href="index.jsp" class="btn back-btn">
+Back
+</a>
 
 </div>
 </div>

@@ -9,8 +9,6 @@ public class FeePayment {
     private double amount;
     private String status;
 
-    // Getter and Setter methods
-
     public int getPaymentID() {
         return paymentID;
     }

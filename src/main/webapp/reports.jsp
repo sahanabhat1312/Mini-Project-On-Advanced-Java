@@ -16,7 +16,7 @@
 <a href="ReportServlet?type=overdue" class="btn">Overdue Report</a>
 
 <br><br>
-<a href="index.jsp" class="btn">Back</a>
+<a href="index.jsp" class="btn back-btn"> Back</a>
 
 </div>
 </div>

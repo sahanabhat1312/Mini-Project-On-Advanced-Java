@@ -4,6 +4,7 @@
 </head>
 
 <body>
+
 <div class="container">
 <div class="card">
 
@@ -11,16 +12,28 @@
 
 <form action="reportCriteria" method="post">
 
- From :
- <input type="date" name="fromDate" required>
- To :
- <input type="date" name="toDate" required>
+<label>From Date</label>
 
-<button type="submit">Generate</button><br>
-<a href="index.jsp" class="btn">Back</a>
+<input type="date"
+       name="fromDate"
+       required>
+
+<label>To Date</label>
+
+<input type="date"
+       name="toDate"
+       required>
+
+<button type="submit">Generate</button>
+
 </form>
 
+<br>
+
+<a href="index.jsp" class="btn back-btn">Back</a>
+
 </div>
 </div>
+
 </body>
 </html>
